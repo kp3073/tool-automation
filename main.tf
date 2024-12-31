@@ -4,8 +4,8 @@ provider "azurerm" {
 }
 
 module "vm" {
-  source = "./vm"
   for_each = var.tool
+  source = "./vm"
   component = each.key
   ssh_username = var.ssh_username
   ssh_password = var.ssh_password

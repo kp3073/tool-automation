@@ -3,8 +3,7 @@ resource "azurerm_public_ip" "main" {
   resource_group_name = data.azurerm_resource_group.main.name
   location            = data.azurerm_resource_group.main.location
   allocation_method   = "Dynamic"
-  
-
+  sku = "Basic"
   tags = {
 	environment = var.component
   }
@@ -69,6 +68,7 @@ resource "azurerm_virtual_machine" "main" {
   resource_group_name = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.main.id]
   vm_size = "Standard_DS1_v2"
+  
   
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM

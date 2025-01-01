@@ -1,0 +1,6 @@
+- name: Vault installation
+  hosts: all
+  become: true
+  roles:
+   - "{{ tool_name }}"
+   

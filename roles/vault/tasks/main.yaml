@@ -17,3 +17,4 @@
   ansible.builtin.systemd:
     name: vault
     state: restarted
+    enabled: yes

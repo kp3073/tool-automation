@@ -8,7 +8,7 @@ resource "vault_mount" "main" {
 
 variable "secrets" {
   default = {
-	infra = {}
+	infrass = {}
 	roboshop = {}
   }
 }

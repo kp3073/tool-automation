@@ -78,7 +78,7 @@ resource "azurerm_dns_a_record" "public" {
   records = [azurerm_public_ip.main.ip_address]
 }
 
-resource "azurerm_virtual_machine" "main" {
+resource "azurerm_linux_virtual_machine" "main" {
   depends_on = [azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.private]
   name                = var.component
   location            = data.azurerm_resource_group.main.location
@@ -116,5 +116,7 @@ resource "azurerm_virtual_machine" "main" {
   tags = {
 	environment = var.component
   }
-  
+
+  admin_username = ""
+  size           = ""
 }

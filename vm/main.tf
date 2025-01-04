@@ -70,6 +70,7 @@ resource "azurerm_dns_a_record" "private" {
 }
 
 resource "azurerm_dns_a_record" "public" {
+  depends_on = [azurerm_public_ip.main]
   name                = var.component
   zone_name           = "cloudaws.shop"
   resource_group_name = data.azurerm_resource_group.main.name
@@ -84,6 +85,8 @@ resource "azurerm_virtual_machine" "main" {
   resource_group_name = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.main.id]
   vm_size = "Standard_DS1_v2"
+  priority = "Spot"
+  eviction_policy = "Deallocate"
   
   
 

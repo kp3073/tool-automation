@@ -67,7 +67,10 @@ resource "azurerm_dns_a_record" "public" {
 }
 
 resource "azurerm_virtual_machine" "main" {
-  depends_on = [azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.internal, azurerm_dns_a_record.public]
+  depends_on = [
+	azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.internal,
+	azurerm_dns_a_record.public
+  ]
   name                = var.component
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
@@ -99,5 +102,25 @@ resource "azurerm_virtual_machine" "main" {
   tags = {
 	component = var.component
   }
+ 
 }
+resource "null_resource" "ansible" {
 
+  depends_on = [azurerm_virtual_machine.main]
+
+  provisioner "remote-exec" {
+
+	connection {
+	  type     = "ssh"
+	  user     = var.ssh_username
+	  password = var.ssh_password
+	  host     = azurerm_public_ip.main.ip_address
+	}
+
+	inline = [
+	  "sudo dnf install python3.12-pip -y",
+	  "sudo pip3.12 install ansible",
+	  "ansible-pull -i localhost, -U https://github.com/kp3073/tool-automation main.yml -e user=${var.ssh_username} -e password=${var.ssh_password}"
+	]
+  }
+}

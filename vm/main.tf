@@ -116,7 +116,4 @@ resource "azurerm_linux_virtual_machine" "main" {
   tags = {
 	environment = var.component
   }
-
-  admin_username = ""
-  size           = ""
 }

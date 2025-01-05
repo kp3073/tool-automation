@@ -67,7 +67,7 @@ resource "azurerm_dns_a_record" "public" {
 }
 
 resource "azurerm_virtual_machine" "main" {
-  depends_on = [azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.private, azurerm_dns_a_record.public]
+  depends_on = [azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.internal, azurerm_dns_a_record.public]
   name                = var.component
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name

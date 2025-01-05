@@ -50,7 +50,7 @@ resource "azurerm_network_interface_security_group_association" "main" {
 }
 
 resource "azurerm_dns_a_record" "private" {
-  name                = "${ var.component }-internal"
+  name                = var.component
   zone_name           = "cloudaws.shop"
   resource_group_name = data.azurerm_resource_group.main.name
   ttl                 = 10
@@ -106,18 +106,18 @@ resource "azurerm_virtual_machine" "main" {
 
 ###
 resource "azurerm_public_ip" "main" {
-  name                = "${var.component}-ip"
+  name                = "${var.component}"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   allocation_method   = "Static"
 
   tags = {
-	component = "${var.component}-ip"
+	component = "${var.component}"
   }
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = "${var.component}-nic"
+  name                = var.component
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
 
@@ -130,7 +130,7 @@ resource "azurerm_network_interface" "main" {
 }
 
 resource "azurerm_network_security_group" "main" {
-  name                = "${var.component}-nsg"
+  name                = var.component
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
 
@@ -147,7 +147,7 @@ resource "azurerm_network_security_group" "main" {
   }
 
   tags = {
-	component = "${var.component}-nsg"
+	component = var.component
   }
 }
 
@@ -158,7 +158,7 @@ resource "azurerm_network_interface_security_group_association" "main" {
 }
 
 resource "azurerm_dns_a_record" "main" {
-  name                = "${var.component}"
+  name                = var.component
   zone_name           = "cloudaws.shop"
   resource_group_name = data.azurerm_resource_group.main.name
   ttl                 = 10
@@ -168,7 +168,7 @@ resource "azurerm_dns_a_record" "main" {
 
 resource "azurerm_virtual_machine" "main" {
   depends_on = [azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.main]
-  name                = "${var.component}"
+  name                = var.component
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.main.id]
@@ -183,7 +183,7 @@ resource "azurerm_virtual_machine" "main" {
   }
 
   storage_os_disk {
-	name              = "${var.component}"
+	name              = var.component
 	caching           = "ReadWrite"
 	create_option     = "FromImage"
 	managed_disk_type = "Standard_LRS"
@@ -197,7 +197,7 @@ resource "azurerm_virtual_machine" "main" {
 	disable_password_authentication = false
   }
   tags = {
-	component = "${var.component}"
+	component = var.component
   }
 }
 

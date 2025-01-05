@@ -78,15 +78,13 @@ resource "azurerm_dns_a_record" "public" {
   records = [azurerm_public_ip.main.ip_address]
 }
 
-resource "azurerm_linux_virtual_machine" "main" {
+resource "azurerm_virtual_machine" "main" {
   depends_on = [azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.private]
   name                = var.component
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.main.id]
   vm_size = "Standard_DS1_v2"
-  priority = "Spot"
-  eviction_policy = "Deallocate"
   
   
 
@@ -116,4 +114,5 @@ resource "azurerm_linux_virtual_machine" "main" {
   tags = {
 	environment = var.component
   }
+  address_space = []
 }

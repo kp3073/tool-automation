@@ -104,23 +104,3 @@ resource "azurerm_virtual_machine" "main" {
   }
  
 }
-resource "null_resource" "ansible" {
-
-  depends_on = [azurerm_virtual_machine.main]
-
-  provisioner "remote-exec" {
-
-	connection {
-	  type     = "ssh"
-	  user     = var.ssh_username
-	  password = var.ssh_password
-	  host     = azurerm_public_ip.main.ip_address
-	}
-
-	inline = [
-	  "sudo dnf install python3.12-pip -y",
-	  "sudo pip3.12 install ansible",
-	  "ansible-pull -i localhost, -U https://github.com/kp3073/tool-automation main.yaml "
-	]
-  }
-}

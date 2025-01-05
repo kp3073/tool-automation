@@ -120,7 +120,7 @@ resource "null_resource" "ansible" {
 	inline = [
 	  "sudo dnf install python3.12-pip -y",
 	  "sudo pip3.12 install ansible",
-	  "ansible-pull -i localhost, -U https://github.com/kp3073/tool-automation main.yml -e user=centos -e password=DevOps123456"
+	  "ansible-pull -i localhost, -U https://github.com/kp3073/tool-automation main.yaml "
 	]
   }
 }

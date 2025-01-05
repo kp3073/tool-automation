@@ -6,11 +6,6 @@ resource "vault_mount" "main" {
   description = each.key
 }
 
-resource "vault_kv_secret" "secret" {
-  path = "infra/ssh"
-  data_json = jsonencode()
-}
-
 variable "secrets" {
   default = {
 	infra = {}

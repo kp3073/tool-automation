@@ -3,7 +3,6 @@ provider "vault" {
   token   = var.token
 }
 
-variable "token" {}
 
 provider "azurerm" {
   features {}

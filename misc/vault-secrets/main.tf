@@ -2,13 +2,7 @@ module "create-secrets" {
   for_each = var.secrets
   source   = "./create-secrets"
   kv_path  = each.key
-  secrets  = each.value
+  secret  = each.value
+  token	= var.token
 }
 
-variable "secrets" {
-  default = {
-	ssh = {
-	 username = "admin" 
-	}
-  }
-}

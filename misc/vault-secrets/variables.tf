@@ -1,8 +1,7 @@
 variable "secrets" {
   default = {
-	ssh = {
-	  username = "admin"
-	}
+	ssh = {}
+	robot = {}
   }
 }
 variable "token" {}

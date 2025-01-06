@@ -15,8 +15,6 @@ variable "secrets" {
       }
     }
     roboshop = {
-      frontend ={
-        test = new
       }
     }
   }

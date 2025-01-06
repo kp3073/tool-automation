@@ -8,14 +8,7 @@ module "create-secrets" {
 
 variable "secrets" {
   default = {
-    infra = {
-      ssh = {
-        admin_username = "roboshop-ansible",
-        admin_password = "DevOps@123456"
-      }
-    }
-    roboshop = {
-      }
-    }
+    infra ={}
+    roboshop= {}
   }
 }

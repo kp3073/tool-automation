@@ -1,15 +1,14 @@
-resource "vault_mount" "main" {
+module "create-secrets" {
   for_each = var.secrets
-  path        = each.key
-  type        = "kv"
-  options = { version = "1" }
-  description = each.key
+  source   = "./create-secrets"
+  kv_path  = each.key
+  secrets  = each.value
 }
 
 variable "secrets" {
   default = {
-	infra = {}
-	roboshop = {}
+	ssh = {
+	 username = "admin" 
+	}
   }
 }
-

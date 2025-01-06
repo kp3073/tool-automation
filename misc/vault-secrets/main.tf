@@ -8,7 +8,12 @@ module "create-secrets" {
 
 variable "secrets" {
   default = {
-    infra ={}
+    infra ={
+      ssh= {
+        username = "admin"
+        password = "admin123"
+      }
+    }
     roboshop= {}
   }
 }

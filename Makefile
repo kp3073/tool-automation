@@ -1,7 +1,7 @@
 infra:
 	git pull
 	terraform init
-	terraform apply -auto-approve -var ssh_username=centos -var ssh_password=DevOps4321$$
+	terraform apply -auto-approve -var ssh_username=centos -var ssh_password=Adminadmin123$
 
 ansible:
 	git pull

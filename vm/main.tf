@@ -75,7 +75,7 @@ resource "azurerm_virtual_machine" "main" {
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.main.id]
-  vm_size = "Standard_DS1_v2"
+  vm_size = "Standard_B2s"
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
   delete_os_disk_on_termination = true
@@ -93,8 +93,8 @@ resource "azurerm_virtual_machine" "main" {
   }
   os_profile {
 	computer_name  = var.component
-	admin_username = var.admin_username
-	admin_password = var.admin_password
+	admin_username = var.ssh_username
+	admin_password = var.ssh_password
   }
   os_profile_linux_config {
 	disable_password_authentication = false

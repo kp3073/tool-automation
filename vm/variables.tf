@@ -1,4 +1,4 @@
 variable "component" {}
-variable "admin_username" {}
-variable "admin_password" {}
+variable "ssh_username" {}
+variable "ssh_password" {}
 variable "port" {}

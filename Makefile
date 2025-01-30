@@ -5,4 +5,4 @@ infra:
 
 ansible:
 	git pull
-	ansible-playbook -i $(tool_name)-internal.cloudaws.shop, toolsautomation.yaml -e ansible_username=centos -e ansible_password=Adminadmin123$ -e tool_name=$(tool_name)
+	ansible-playbook -i $(tool_name)-internal.cloudaws.shop, toolsautomation.yaml -e ansible_user=centos -e ansible_password=Adminadmin123$ -e tool_name=$(tool_name)

@@ -1,17 +1,17 @@
-
 resource "azurerm_public_ip" "main" {
-  name                = var.component
+  name                = "${var.component}-ip"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
-  allocation_method   = "Static"
+  allocation_method   = "Dynamic"
+  sku                 = "Basic"
 
   tags = {
-	component = var.component
+	component = "${var.component}-ip"
   }
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = var.component
+  name                = "${var.component}-nic"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
 
@@ -24,24 +24,36 @@ resource "azurerm_network_interface" "main" {
 }
 
 resource "azurerm_network_security_group" "main" {
-  name                = var.component
+  name                = "${var.component}-nsg"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
 
   security_rule {
-	name                       = "main"
+	name                       = "ssh"
 	priority                   = 100
 	direction                  = "Inbound"
 	access                     = "Allow"
 	protocol                   = "Tcp"
 	source_port_range          = "*"
-	destination_port_range     = "*"
+	destination_port_range     = "22"
+	source_address_prefix      = "*"
+	destination_address_prefix = "*"
+  }
+
+  security_rule {
+	name                       = var.component
+	priority                   = 101
+	direction                  = "Inbound"
+	access                     = "Allow"
+	protocol                   = "Tcp"
+	source_port_range          = "*"
+	destination_port_range     = var.port
 	source_address_prefix      = "*"
 	destination_address_prefix = "*"
   }
 
   tags = {
-	component = var.component
+	component = "${var.component}-nsg"
   }
 }
 
@@ -51,26 +63,25 @@ resource "azurerm_network_interface_security_group_association" "main" {
   network_security_group_id = azurerm_network_security_group.main.id
 }
 
-resource "azurerm_dns_a_record" "internal" {
-  name                =  "${ var.component }-internal"
-  zone_name           = "cloudaws.shop"
+resource "azurerm_dns_a_record" "private" {
+  name                = "${var.component}-internal"
+  zone_name           = "azdevopsb82.online"
   resource_group_name = data.azurerm_resource_group.main.name
   ttl                 = 10
   records = [azurerm_network_interface.main.private_ip_address]
 }
+
 resource "azurerm_dns_a_record" "public" {
   name                = var.component
-  zone_name           = "cloudaws.shop"
+  zone_name           = "azdevopsb82.online"
   resource_group_name = data.azurerm_resource_group.main.name
   ttl                 = 10
   records = [azurerm_public_ip.main.ip_address]
 }
 
+
 resource "azurerm_virtual_machine" "main" {
-  depends_on = [
-	azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.internal,
-	azurerm_dns_a_record.public
-  ]
+  depends_on = [azurerm_network_interface_security_group_association.main, azurerm_dns_a_record.private]
   name                = var.component
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
@@ -102,5 +113,4 @@ resource "azurerm_virtual_machine" "main" {
   tags = {
 	component = var.component
   }
- 
 }

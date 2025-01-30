@@ -10,8 +10,8 @@ variable "secrets" {
   default = {
     infra = {
       ssh = {
-        ssh_username = "centos",
-        ssh_password = "Adminadmin123$"
+        admin_username = "centos",
+        admin_password = "Adminadmin123$"
       }
     }
     roboshop-dev = {

@@ -59,6 +59,7 @@ variable "secrets" {
         DB_HOST       = "mysql-dev.cloudaws.shop"
         DB_USER       = "root"
         DB_PASS       = "RoboShop@1"
+        MYSQL_ROOT_PASSWORD = "RoboShop@1"
       }
       payment = {
         CART_HOST = "cart-dev.cloudaws.shop"

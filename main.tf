@@ -18,6 +18,9 @@ variable "tool" {
 	vault = {
 	  port = 8200
 	}
+	github-runner={
+	  port = "*"
+	}
   }
 }
 

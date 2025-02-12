@@ -20,5 +20,5 @@
   ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ lookup('community.hashi_vault.hashi_vault', 'secret=infra/github-actions:runner_token token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200') }} --runnergroup Default --name github-runner-az --labels self-hosted --work _work --replace
   args:
     chdir: /github-runner
-    ignore_errors: yes
+  ignore_errors: yes
     

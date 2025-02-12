@@ -21,6 +21,6 @@
     args:
       chdir: /github-runner
     env:
-      token: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=infra/github-actions:RUNNER_TOKEN token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      token: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner:token token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
       ignore_errors: yes
       

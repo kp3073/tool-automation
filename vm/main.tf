@@ -100,7 +100,7 @@ resource "azurerm_virtual_machine" "main" {
   }
 }
 resource "azurerm_dns_a_record" "private" {
-  depends_on = [azurerm_virtual_machine.main]
+ 
   name                = "${var.component}-internal"
   zone_name           = "cloudaws.shop"
   resource_group_name = data.azurerm_resource_group.main.name
@@ -109,7 +109,7 @@ resource "azurerm_dns_a_record" "private" {
 }
 
 resource "azurerm_dns_a_record" "public" {
-  depends_on = [azurerm_public_ip.main, azurerm_virtual_machine.main]
+  
   name                = var.component
   zone_name           = "cloudaws.shop"
   resource_group_name = data.azurerm_resource_group.main.name

@@ -27,6 +27,7 @@
   ansible.builtin.template:
     src: github-runner.service
     dest: /etc/systemd/system/github-runner.service
+    
 
 - name: Start Service
   ansible.builtin.systemd_service:

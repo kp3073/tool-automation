@@ -1,0 +1,25 @@
+- name: Add github runner user
+  ansible.builtin.user:
+    name: github-runner
+    home: /github-runner
+
+- name: Download runner software
+  ansible.builtin.unarchive:
+    src: https://github.com/actions/runner/releases/download/v2.322.0/actions-runner-linux-x64-2.322.0.tar.gz
+    dest: /github-runner
+    owner: github-runner
+    group: github-runner
+    remote_src: yes
+
+- name: Install libicu
+  ansible.builtin.dnf:
+    name: libicu
+    state: installed
+
+- - name: Configure runner
+    ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ token }} --runnergroup Default --name github-runner-az --labels self-hosted --work _work --replace
+    args:
+      chdir: /github-runner
+    env:
+      token: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=infra/github-actions:RUNNER_TOKEN token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      ignore_errors: yes

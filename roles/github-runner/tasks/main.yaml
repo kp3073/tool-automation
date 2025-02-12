@@ -16,11 +16,11 @@
     name: libicu
     state: installed
 
-- - name: Configure runner
-    ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ token }} --runnergroup Default --name github-runner-az --labels self-hosted --work _work --replace
-    args:
-      chdir: /github-runner
-    env:
-      token: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner:token token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
-      ignore_errors: yes
-      
+- name: Configure runner
+  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ token }} --runnergroup Default --name github-runner-az --labels self-hosted --work _work --replace
+  args:
+    chdir: /github-runner
+  env:
+    token: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner:token token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+    ignore_errors: yes
+    

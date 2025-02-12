@@ -1,9 +1,9 @@
 [Unit]
-Description=GitHub Actions Runner (_services.Linux-Host01)
+Description=GitHub Actions Runner (azawsdevops.github-runner-az)
 After=network.target
 
 [Service]
-ExecStart=/github-runner/runsvc
+ExecStart=/github-runner/runsvc.sh
 User=github-runner
 WorkingDirectory=/github-runner
 KillMode=process

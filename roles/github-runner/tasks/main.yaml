@@ -16,12 +16,12 @@
     name: libicu
     state: installed
 
-#- name: Configure runner
-#  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token BCKQBLB724QBV6WNSPIL5C3HVUHA6 --unattended --name github-runner-az --labels default --replace --work _work
-#  args:
-#    chdir: /github-runner
-#  become_user: github-runner
-#  ignore_errors: yes
+- name: Configure runner
+  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token BCKQBLB724QBV6WNSPIL5C3HVUHA6 --unattended --name github-runner-az --labels default --replace --work _work
+  args:
+    chdir: /github-runner
+  become_user: github-runner
+  ignore_errors: yes
 #    
 #- name: Copy Service
 #  ansible.builtin.template:

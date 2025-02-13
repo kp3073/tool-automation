@@ -25,7 +25,8 @@
 
 - name: start Service
   ansible.builtin.shell: ./svc.sh install ; ./svc.sh start
-
+  args:
+    chdir: /github-runner
 #
 #- name: Copy Service
 #  ansible.builtin.template:

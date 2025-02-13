@@ -24,7 +24,7 @@
   ignore_errors: yes
 
 - name: start Service
-    ansible.builtin.shell: ./svc.sh install ; ./svc.sh start
+  ansible.builtin.shell: ./svc.sh install ; ./svc.sh start
 
 #
 #- name: Copy Service

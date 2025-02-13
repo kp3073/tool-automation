@@ -16,22 +16,22 @@
     name: libicu
     state: installed
 
-- name: Configure runner
-  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token BCKQBLHDQONC55UGR7FP4J3HVZG44 --unattended --name github-runner-az --runnergroup Default --labels self-hosted --work _work --replace
-  args:
-    chdir: /github-runner
-  become_user: github-runner
-  ignore_errors: yes
-
-- name: Copy Service
-  ansible.builtin.template:
-    src: github-runner.service
-    dest: /etc/systemd/system/github-runner.service
-
-- name: Start Service
-  ansible.builtin.systemd_service:
-    name: github-runner
-    state: restarted
-    enabled: yes
-    daemon-reload: yes
-  
+#- name: Configure runner
+#  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token BCKQBLHDQONC55UGR7FP4J3HVZG44 --unattended --name github-runner-az --runnergroup Default --labels self-hosted --work _work --replace
+#  args:
+#    chdir: /github-runner
+#  become_user: github-runner
+#  ignore_errors: yes
+#
+#- name: Copy Service
+#  ansible.builtin.template:
+#    src: github-runner.service
+#    dest: /etc/systemd/system/github-runner.service
+#
+#- name: Start Service
+#  ansible.builtin.systemd_service:
+#    name: github-runner
+#    state: restarted
+#    enabled: yes
+#    daemon-reload: yes
+#  

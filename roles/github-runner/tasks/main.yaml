@@ -42,7 +42,7 @@
 
 - name: Download Terraform Repo 
   ansible.builtin.get_url:
-    repo: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
     dest: /etc/yum.repos.d/hashicorp.repo
     
 - name: Install Terraform

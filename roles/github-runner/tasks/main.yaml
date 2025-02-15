@@ -17,7 +17,7 @@
     state: installed
 
 - name: Configure runner
-  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token BCKQBLHDQONC55UGR7FP4J3HVZG44 --unattended --name github-runner-az --runnergroup Default --labels self-hosted --work _work --replace
+  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner/token token=${vault_token} url=http://vault-internal.cloudaws.shop:8200') }} --unattended --name github-runner-az --runnergroup Default --labels self-hosted --work _work --replace
   args:
     chdir: /github-runner
   become_user: github-runner
@@ -49,5 +49,9 @@
   ansible.builtin.dnf:
       name: terraform
       state: installed
+      
+- name: Login to azure with SP
+  ansible.builtin.shell: az login --service-principal -u {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp/az_sp_appid token=${vault_token} url=http://vault-internal.cloudaws.shop:8200') }} -p {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp/az_sp_appsecret token=${vault_token} url=http://vault-internal.cloudaws.shop:8200') }} --tenant {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp/az_tenant token=${vault_token} url=http://vault-internal.cloudaws.shop:8200') }}
+  become_user: github-runner
 
 

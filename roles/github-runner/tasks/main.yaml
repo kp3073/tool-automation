@@ -56,5 +56,9 @@
 - name: Install KubeCtl
   ansible.builtin.template:
       src: kube.repo
-      dest: /etc/yum.repos.d/kube.repo 
+      dest: /etc/yum.repos.d/kube.repo
+- name: Install kubectl
+  ansible.builtin.dnf:
+    name: kubectl
+    state: installed
 

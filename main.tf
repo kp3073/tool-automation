@@ -25,6 +25,7 @@ variable "tool" {
 	  port = 8200
   }
 }
+  
 
 #variables
 variable "ssh_username" {}

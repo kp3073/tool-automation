@@ -22,7 +22,7 @@ variable "repos" {
 
 resource "github_repository_environment" "example" {
   count = length(var.repos)
-  environment         = DEV
+  environment         = "DEV"
   repository          = var.repos[count.index]
   prevent_self_review = false
   reviewers {

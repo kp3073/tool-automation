@@ -1,3 +1,5 @@
+variable "github_token" {}
+
 terraform {
   required_providers {
 	github = {
@@ -10,6 +12,7 @@ terraform {
 provider "github" {
   # Configuration options
   owner = "azawsdevops"
+  token = "var.${github_token}"
 }
 
 data "github_user" "current" {

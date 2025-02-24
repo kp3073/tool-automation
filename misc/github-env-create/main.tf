@@ -23,7 +23,7 @@ variable "repos" {
   default = ["roboshop-cart", "roboshop-user", "roboshop-shipping","roboshop-payment", "roboshop-frontend"]
 }
 
-resource "github_repository_environment" "example" {
+resource "github_repository_environment" "dev" {
   count = length(var.repos)
   environment         = "DEV"
   repository          = var.repos[count.index]
@@ -33,6 +33,32 @@ resource "github_repository_environment" "example" {
   }
 }
 
-output "user" {
-  value = data.github_user.current
+resource "github_repository_environment" "qa" {
+  count = length(var.repos)
+  environment         = "QA"
+  repository          = var.repos[count.index]
+  prevent_self_review = false
+  reviewers {
+	users = [data.github_user.current.id]
+  }
+}
+
+resource "github_repository_environment" "qat" {
+  count = length(var.repos)
+  environment         = "QAT"
+  repository          = var.repos[count.index]
+  prevent_self_review = false
+  reviewers {
+	users = [data.github_user.current.id]
+  }
+}
+
+resource "github_repository_environment" "prod" {
+  count = length(var.repos)
+  environment         = "PROD"
+  repository          = var.repos[count.index]
+  prevent_self_review = false
+  reviewers {
+	users = [data.github_user.current.id]
+  }
 }

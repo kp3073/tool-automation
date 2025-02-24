@@ -1,3 +1,5 @@
+
+
 terraform {
   required_providers {
 	github = {
@@ -6,6 +8,14 @@ terraform {
 	}
   }
 }
+variable "github_token" {}
+provider "github" {
+  # Configuration options
+  owner = "kp3073"
+  token = var.github_token
+}
+
+
 
 resource "github_repository" "example" {
   name        = "github-reusable-modules"

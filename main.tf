@@ -21,9 +21,7 @@ variable "tool" {
 	github-runner = {
 	  port = "*"
 	}
-	test-Vault = {
-	  port = 8200
-	}
+
   }
 }
 

@@ -32,3 +32,7 @@ resource "github_repository_environment" "example" {
 	users = [data.github_user.current.id]
   }
 }
+
+output "user" {
+  value = data.github_user.current
+}

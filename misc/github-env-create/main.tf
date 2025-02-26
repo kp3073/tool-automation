@@ -1,4 +1,3 @@
-variable "github_token" {}
 
 terraform {
   required_providers {
@@ -28,9 +27,6 @@ resource "github_repository_environment" "dev" {
   environment         = "DEV"
   repository          = var.repos[count.index]
   prevent_self_review = false
-  reviewers {
-	users = [data.github_user.current.id]
-  }
 }
 
 resource "github_repository_environment" "qa" {

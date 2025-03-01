@@ -1,0 +1,26 @@
+- name: create sonarqube user
+  ansible.builtin.user:
+    name: sonarqube
+    group: sonarqube
+    home: /sonarqube
+
+- name: download sonarqube
+  ansible.builtin.unarchive:
+    url: https://binaries.sonarsource.com/CommercialDistribution/sonarqube-developer/sonarqube-developer-2025.1.0.102418.zip?_gl=1*16r8y7q*_up*MQ..*_gs*MQ..*_ga*OTY5MzkyMjI5LjE3NDA4NjE5OTk.*_ga_9JZ0GZ5TC6*MTc0MDg2MTk5OC4xLjEuMTc0MDg2MTk5OS41OS4wLjA.*_gcl_aw*R0NMLjE3NDA4NjE5OTkuQ2owS0NRaUFfWXEtQmhDOUFSSXNBQTZmYkFoNS0wUUktd1pMa0FiSmJLdEhkNFplaVY0MXJWMEVCREpRVllkdjlKbjVZRnRtSGdZcU0zQWFBb3BaRUFMd193Y0I.*_gcl_au*MTQ2OTk0NTk2OC4xNzQwODYxOTk5&gclid=Cj0KCQiA_Yq-BhC9ARIsAA6fbAh5-0QI-wZLkAbJbKtHd4ZeiV41rV0EBDJQVYdv9Jn5YFtmHgYqM3AaAopZEALw_wcB
+    dest: /sonarqube
+    owner: sonarqube
+    group: sonarqube
+    remote_src: yes
+
+- name: install java
+  ansible.builtin.dnf:
+    name: java-11-openjdk
+    state: present
+
+
+#- name: install sonarqube
+#  ansible.builtin.shell: /sonarqube/bin/linux-x86-64/sonar.sh start
+#  become_user: sonarqube
+
+
+

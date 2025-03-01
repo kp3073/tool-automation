@@ -5,8 +5,8 @@
 - name: create sonarqube directory
   ansible.builtin.file:
     name: sonarqube
-    state: directory
     path: /sonarqube
+    state: directory
     owner: sonarqube
     group: sonarqube
 

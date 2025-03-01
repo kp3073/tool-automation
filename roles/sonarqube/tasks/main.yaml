@@ -1,8 +1,13 @@
 - name: create sonarqube user
   ansible.builtin.user:
     name: sonarqube
+
+- name: create sonarqube directory
+  ansible.builtin.file:
+    name: sonarqube
+    state: directory
+    owner: sonarqube
     group: sonarqube
-    home: /sonarqube
 
 - name: download sonarqube
   ansible.builtin.unarchive:

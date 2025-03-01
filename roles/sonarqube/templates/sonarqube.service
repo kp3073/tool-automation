@@ -1,0 +1,13 @@
+[Unit]
+Description=sonarqube
+After=network.target
+
+[Service]
+ExecStart=/sonarqube/sonarqube-25.2.0.102705/bin/linux-x86-64/sonar.sh start
+User=sonarqube
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=5min
+
+[Install]
+WantedBy=multi-user.target

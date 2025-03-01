@@ -16,6 +16,7 @@
   ansible.builtin.dnf:
     name: java-11-openjdk
     state: present
+    
 
 #- name: install sonarqube
 #  ansible.builtin.shell: /sonarqube/bin/linux-x86-64/sonar.sh start

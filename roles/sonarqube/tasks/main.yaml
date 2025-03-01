@@ -20,7 +20,7 @@
 - name: install java
   ansible.builtin.dnf:
     name: java-17-openjdk
-    state: present
+    state: installed
 
 - name: sonarqube servicefile copy
   ansible.builtin.template:

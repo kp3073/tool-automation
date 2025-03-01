@@ -1,6 +1,6 @@
 - name: install java
   ansible.builtin.dnf:
-    name: java-17-openjdk
+    name: java-11-openjdk
     state: installed
     
 - name: create sonarqube user

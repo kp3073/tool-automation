@@ -1,5 +1,5 @@
 [Unit]
-Description=sonarqube
+Description=SonarQube Server
 After=network.target
 
 [Service]

@@ -23,10 +23,10 @@ variable "tool" {
 	}
 	sonarqube = {
 	  port = 9000
+	}
   }
+
 }
-
-
   #variables
   variable "ssh_username" {}
   variable "ssh_password" {}
@@ -44,4 +44,5 @@ variable "tool" {
 	  # Can be passed via `-backend-config=`"key=<blob key name>"` in the `init` command.
 	}
   }
+
 

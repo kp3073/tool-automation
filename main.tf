@@ -21,7 +21,8 @@ variable "tool" {
 	github-runner = {
 	  port = "*"
 	}
-
+	sonarqube = {
+	  port = 9000
   }
 }
 

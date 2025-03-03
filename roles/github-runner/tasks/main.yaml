@@ -80,5 +80,8 @@
       - python3
       - gcc
       - python-devel
-
-
+      
+- name: Install sonar-scanner CLI
+  ansible.builtin.get_url:
+    url: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.0.2.4839-linux-x64.zip
+    dest: /opt

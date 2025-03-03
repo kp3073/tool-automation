@@ -49,6 +49,7 @@
   ansible.builtin.dnf:
       name: terraform
       state: installed
+      ignore_errors: yes
       
 #- name: Login to azure with SP
 #  ansible.builtin.shell: az login --service-principal --username {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp:az_sp_appid token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}}  --password {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp:az_sp_appsecret token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}} --tenant {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp:az_tenant token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}}

@@ -73,6 +73,7 @@
 
 - name: Disable old version on nodejs 
   ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:20 -y
+  ignore_errors: yes
   
 - name: Install App dependencies software
   ansible.builtin.dnf:

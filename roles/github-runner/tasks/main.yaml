@@ -85,7 +85,8 @@
       - python-devel
   ignore_errors: yes
     
-- name: Install sonar-scanner CLI
-  ansible.builtin.get_url:
-    url: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.0.2.4839-linux-x64.zip
+- name: Extract Sonar Scanner CLI
+  ansible.builtin.unarchive:
+    src: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
     dest: /opt
+    remote_src: yes

@@ -83,7 +83,7 @@
       - python3
       - gcc
       - python-devel
-    ignore_errors: yes
+  ignore_errors: yes
     
 - name: Install sonar-scanner CLI
   ansible.builtin.get_url:

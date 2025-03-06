@@ -71,19 +71,17 @@
     rm argocd-linux-amd64 
   ignore_errors: yes
 
-- name: Disable old version on nodejs 
+- name: Setup Nodejs module
   ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:20 -y
-  ignore_errors: yes
-  
-- name: Install App dependencies software
+
+- name: Install App Software Language packs
   ansible.builtin.dnf:
-    name: 
-      - nodejs
-      - maven
-      - python3
-      - gcc
-      - python-devel
-  ignore_errors: yes
+    name:
+    - maven
+    - nodejs
+    - python3
+    - gcc
+    - python3-devel
     
 - name: Download sonar scanner
   ansible.builtin.unarchive:

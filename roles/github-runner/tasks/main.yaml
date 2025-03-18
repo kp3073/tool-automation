@@ -41,8 +41,8 @@
     
 - name: Install Terraform
   ansible.builtin.dnf:
-      name: terraform
-      state: installed
+    name: terraform
+    state: installed
   ignore_errors: yes
   
 - name: Install kubectl

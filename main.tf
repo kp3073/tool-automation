@@ -18,7 +18,7 @@ variable "tool" {
 	vault = {
 	  port = 8200
 	}
-	github-runner = {
+	github-runner1 = {
 	  port = "*"
 	}
 	sonarqube = {

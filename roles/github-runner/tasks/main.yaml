@@ -11,13 +11,13 @@
     group: github-runner
     remote_src: yes
 
-#- name: Install libicu
-#  ansible.builtin.dnf:
-#    name: libicu
-#    state: installed
+- name: Install libicu
+  ansible.builtin.dnf:
+    name: libicu
+    state: installed
 
 - name: Configure runner
-  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner:token token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}} --unattended --name github-runner-az --runnergroup Default --labels self-hosted --work _work --replace
+  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner:token token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}} --unattended --name github-runner-azure--runnergroup Default --labels self-hosted --work _work --replace
   args:
     chdir: /github-runner
   become_user: github-runner
@@ -33,12 +33,6 @@
     src: github-runner.service
     dest: /etc/systemd/system/github-runner.service
 
-- name: Start Service
-  ansible.builtin.systemd_service:
-    name: github-runner
-    state: restarted
-    enabled: yes
-    daemon-reload: yes
 
 - name: Download Terraform Repo 
   ansible.builtin.get_url:
@@ -50,6 +44,11 @@
       name: terraform
       state: installed
   ignore_errors: yes
+  
+- name: Install kubectl
+  ansible.builtin.dnf:
+    name: kubectl
+    state: installed
       
 #- name: Login to azure with SP
 #  ansible.builtin.shell: az login --service-principal --username {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp:az_sp_appid token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}}  --password {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp:az_sp_appsecret token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}} --tenant {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/azure_sp:az_tenant token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}}
@@ -88,3 +87,32 @@
     src: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
     dest: /opt
     remote_src: yes
+    
+- name: Copy docker repo
+  ansible.builtin.template:
+    src: docker.repo
+    dest: /etc/yum.repos.d/docker.repo
+
+- name: Install docker
+  ansible.builtin.dnf:
+    name: docker-ce
+    state: installed
+
+- name: Add user to docker group.
+  ansible.builtin.user:
+    name: github-runner
+    groups: docker
+
+- name: Start Docker Service
+  ansible.builtin.systemd_service:
+    name: docker
+    state: restarted
+    enabled: yes
+    
+- name: Start Service
+  ansible.builtin.systemd_service:
+    name: github-runner
+    state: restarted
+    enabled: yes
+    daemon-reload: yes
+ 

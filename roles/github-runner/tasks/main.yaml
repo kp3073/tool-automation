@@ -17,11 +17,11 @@
     state: installed
 
 - name: Configure runner
-  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner:token token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}} --unattended --name github-runner-azure--runnergroup Default --labels self-hosted --work _work --replace
+  ansible.builtin.shell: ./config.sh --url https://github.com/azawsdevops --token {{ lookup('community.hashi_vault.hashi_vault', 'secret=github-action/data/github-runner:token token={{ vault_token }} url=http://vault-internal.cloudaws.shop:8200')}} --unattended --name github-runner-azure --runnergroup Default --labels self-hosted --work _work --replace
   args:
     chdir: /github-runner
   become_user: github-runner
-  ignore_errors: yes
+#  ignore_errors: yes
 
 #- name: start Service
 #  ansible.builtin.shell: ./svc.sh install ; ./svc.sh start
@@ -34,16 +34,16 @@
     dest: /etc/systemd/system/github-runner.service
 
 
-- name: Download Terraform Repo 
-  ansible.builtin.get_url:
-    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-    dest: /etc/yum.repos.d/hashicorp.repo
-    
-- name: Install Terraform
-  ansible.builtin.dnf:
-    name: terraform
-    state: installed
-  ignore_errors: yes
+#- name: Download Terraform Repo 
+#  ansible.builtin.get_url:
+#    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+#    dest: /etc/yum.repos.d/hashicorp.repo
+#    
+#- name: Install Terraform
+#  ansible.builtin.dnf:
+#    name: terraform
+#    state: installed
+#  ignore_errors: yes
   
 #- name: Install kubectl
 #  ansible.builtin.dnf:
@@ -62,53 +62,53 @@
 #    name: kubectl
 #    state: installed  ## Install it manually on Server 
 
-- name: Install ArgoCD cli
-  ansible.builtin.shell: |
-    VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION)
-    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/$VERSION/argocd-linux-amd64
-    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-    rm argocd-linux-amd64 
-  ignore_errors: yes
-
-- name: Setup Nodejs module
-  ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:20 -y
-
-- name: Install App Software Language packs
-  ansible.builtin.dnf:
-    name:
-    - maven
-    - nodejs
-    - python3
-    - gcc
-    - python3-devel
-    
-- name: Download sonar scanner
-  ansible.builtin.unarchive:
-    src: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
-    dest: /opt
-    remote_src: yes
-    
-- name: Copy docker repo
-  ansible.builtin.template:
-    src: docker.repo
-    dest: /etc/yum.repos.d/docker.repo
-
-- name: Install docker
-  ansible.builtin.dnf:
-    name: docker-ce
-    state: installed
-
-- name: Add user to docker group.
-  ansible.builtin.user:
-    name: github-runner
-    groups: docker
-
-- name: Start Docker Service
-  ansible.builtin.systemd_service:
-    name: docker
-    state: restarted
-    enabled: yes
-    
+#- name: Install ArgoCD cli
+#  ansible.builtin.shell: |
+#    VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION)
+#    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/$VERSION/argocd-linux-amd64
+#    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+#    rm argocd-linux-amd64 
+#  ignore_errors: yes
+#
+#- name: Setup Nodejs module
+#  ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:20 -y
+#
+#- name: Install App Software Language packs
+#  ansible.builtin.dnf:
+#    name:
+#    - maven
+#    - nodejs
+#    - python3
+#    - gcc
+#    - python3-devel
+#    
+#- name: Download sonar scanner
+#  ansible.builtin.unarchive:
+#    src: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
+#    dest: /opt
+#    remote_src: yes
+#    
+#- name: Copy docker repo
+#  ansible.builtin.template:
+#    src: docker.repo
+#    dest: /etc/yum.repos.d/docker.repo
+#
+#- name: Install docker
+#  ansible.builtin.dnf:
+#    name: docker-ce
+#    state: installed
+#
+#- name: Add user to docker group.
+#  ansible.builtin.user:
+#    name: github-runner
+#    groups: docker
+#
+#- name: Start Docker Service
+#  ansible.builtin.systemd_service:
+#    name: docker
+#    state: restarted
+#    enabled: yes
+#    
 - name: Start Service
   ansible.builtin.systemd_service:
     name: github-runner

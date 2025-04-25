@@ -12,8 +12,8 @@ infra = {
 ssh = {
 admin_username = "centos",
 admin_password = "Adminadmin123$"
-}
-}
+      }
+        }
   roboshop-dev = {
     frontend = {
       catalogue_endpoint = "http://catalogue:8080"
